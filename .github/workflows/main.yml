@@ -3,7 +3,7 @@ name: Flask CI/CD Pipeline
 on:
   push:
     branches:
-      - master
+      - main
 
 jobs:
   build-and-deploy:
@@ -37,4 +37,6 @@ jobs:
           ssh-password: ${{ secrets.SSH_PASSWORD }}
           ssh-host: ${{ secrets.SSH_HOST }}
           ssh-port: ${{ secrets.SSH_PORT }}
-          deploy-path: ${{ secrets.DEPLOY_PATH }}
+          deploy-path: /var/www/defect-tracking-application
+          source-path: ./
+
