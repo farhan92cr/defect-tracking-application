@@ -1,0 +1,15 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Dashboard</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+</head>
+<body>
+    <h1>Dashboard</h1>
+    <ul>
+        <li><a href="{{ url_for('add_defect') }}">Add Defect</a></li>
+        <li><a href="{{ url_for('search_defect') }}">Search Defect</a></li>
+        <li><a href="{{ url_for('all_defects') }}">Show All Defects</a></li>
+    </ul>
+</body>
+</html>

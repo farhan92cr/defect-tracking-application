@@ -1,0 +1,16 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Search Defect</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+</head>
+<body>
+    <h1>Search Defect</h1>
+    <form action="{{ url_for('search_defect') }}" method="POST">
+        <label for="imei">IMEI:</label>
+        <input type="text" id="imei" name="imei" required>
+        <br>
+        <button type="submit">Search</button>
+    </form>
+</body>
+</html>

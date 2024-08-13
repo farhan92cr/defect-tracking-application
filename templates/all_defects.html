@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>All Defects</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+</head>
+<body>
+    <h1>All Defects</h1>
+    <table>
+        <thead>
+            <tr>
+                <th>Model</th>
+                <th>Defect Type</th>
+                <th>IMEI</th>
+                <th>Image</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for defect in defects %}
+            <tr>
+                <td>{{ defect.model }}</td>
+                <td>{{ defect.defect_type }}</td>
+                <td>{{ defect.imei }}</td>
+                <td>
+                    {% if defect.image %}
+                    <img src="{{ url_for('static', filename='images/' ~ defect.image) }}" alt="Defect Image" width="100">
+                    {% else %}
+                    No Image
+                    {% endif %}
+                </td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</body>
+</html>

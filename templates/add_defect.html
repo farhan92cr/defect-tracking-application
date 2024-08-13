@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Add Defect</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+</head>
+<body>
+    <h1>Add Defect</h1>
+    <form action="{{ url_for('add_defect') }}" method="POST" enctype="multipart/form-data">
+        <label for="model">Model:</label>
+        <select id="model" name="model">
+            <option value="X6516">X6516</option>
+            <option value="X525B">X525B</option>
+            <option value="X6525">X6525</option>
+            <option value="X6528">X6528</option>
+            <option value="Villaon">Villaon</option>
+        </select>
+        <br>
+        <label for="defect_type">Defect Type:</label>
+        <select id="defect_type" name="defect_type">
+            <option value="SN">SN</option>
+            <option value="Appearance">Appearance</option>
+            <option value="Phone code">Phone code</option>
+            <option value="SN/IMEI">SN/IMEI</option>
+        </select>
+        <br>
+        <label for="imei">IMEI:</label>
+        <input type="text" id="imei" name="imei" required>
+        <br>
+        <label for="image">Image:</label>
+        <input type="file" id="image" name="image">
+        <br>
+        <button type="submit">Add Defect</button>
+    </form>
+</body>
+</html>
