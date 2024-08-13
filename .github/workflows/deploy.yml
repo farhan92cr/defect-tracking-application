@@ -25,6 +25,7 @@ jobs:
       - name: Run tests
         run: |
           python -m unittest discover -s app/tests -p 'test_*.py'
+    
         
       - name: Deploy to Vultr server
         env:
