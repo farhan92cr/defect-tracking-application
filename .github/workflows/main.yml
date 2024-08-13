@@ -3,7 +3,7 @@ name: Flask CI/CD Pipeline
 on:
   push:
     branches:
-      - main
+      - master
 
 jobs:
   build-and-deploy:
@@ -27,16 +27,17 @@ jobs:
           python -m unittest discover -s tests -p 'test_*.py'
 
       - name: Build and deploy
+        env:
+          SSH_USER: ${{ secrets.SSH_USER }}
+          SSH_PASSWORD: ${{ secrets.SSH_PASSWORD }}
+          SSH_HOST: ${{ secrets.SSH_HOST }}
+          SSH_PORT: ${{ secrets.SSH_PORT }}
+          DEPLOY_PATH: ${{ secrets.DEPLOY_PATH }}
         run: |
-          flask run --host=0.0.0.0 --port=5000
-
-      - name: Deploy to production
-        uses: deploy/deploy-to-production@v1
-        with:
-          ssh-user: ${{ secrets.SSH_USER }}
-          ssh-password: ${{ secrets.SSH_PASSWORD }}
-          ssh-host: ${{ secrets.SSH_HOST }}
-          ssh-port: ${{ secrets.SSH_PORT }}
-          deploy-path: /var/www/defect-tracking-application
-          source-path: ./
-
+          sshpass -p $SSH_PASSWORD ssh -o StrictHostKeyChecking=no $SSH_USER@$SSH_HOST -p $SSH_PORT << 'EOF'
+          cd $DEPLOY_PATH
+          git pull origin master
+          source venv/bin/activate
+          pip install -r requirements.txt
+          sudo systemctl restart flask-app
+          EOF
