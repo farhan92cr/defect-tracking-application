@@ -41,7 +41,5 @@ jobs:
           cd /var/www/defect-tracking-application/
           git pull origin main
           sudo systemctl restart flask
-        EOF
-
-    - name: Clean up
-      run: rm private_key
+      EOF
+      rm private_key
