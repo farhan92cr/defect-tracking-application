@@ -1,5 +1,7 @@
 python main.py   --> to run the program
 
+ pip install -r requirements.txt
+
 Dependencices:
-Python
+
 mangodb
