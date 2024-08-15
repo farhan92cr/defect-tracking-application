@@ -1,6 +1,7 @@
 from flask import render_template, request, redirect, url_for, session, jsonify
 from app import app, mongo
 from bson import ObjectId
+from werkzeug.security import generate_password_hash, check_password_hash
 
 @app.route('/')
 def index():
@@ -10,10 +11,35 @@ def index():
 def login():
     username = request.form['username']
     password = request.form['password']
+    
+    user = mongo.db.users.find_one({'username': username})
+    
+    if user and check_password_hash(user['password'], password):
+        session['username'] = username
+        return redirect(url_for('dashboard'))
     if username == 'admin' and password == 'password':
         session['username'] = username
         return redirect(url_for('dashboard'))
-    return 'Invalid credentials'
+    
+    return 'Invalid credentials', 401
+
+@app.route('/signup', methods=['GET', 'POST'])
+def signup():
+    if request.method == 'POST':
+        username = request.form['username']
+        password = request.form['password']
+        hashed_password = generate_password_hash(password, method='sha256')
+
+        # Check if the username already exists
+        existing_user = mongo.db.users.find_one({'username': username})
+        if existing_user:
+            return 'Username already exists', 400
+
+        mongo.db.users.insert_one({'username': username, 'password': hashed_password})
+        session['username'] = username
+        return redirect(url_for('dashboard'))
+    
+    return render_template('signup.html')
 
 @app.route('/dashboard')
 def dashboard():
@@ -48,7 +74,7 @@ def search_defect():
             if defect:
                 defect['_id'] = str(defect['_id'])
                 return jsonify(defect)
-            return 'No defect found'
+            return 'No defect found', 404
         return render_template('search_defect.html')
     return redirect(url_for('index'))
 
@@ -61,4 +87,9 @@ def all_defects():
             defect['_id'] = str(defect['_id'])  # Convert ObjectId to string
             defect_list.append(defect)
         return render_template('all_defects.html', defects=defect_list)
+    return redirect(url_for('index'))
+
+@app.route('/logout')
+def logout():
+    session.pop('username', None)
     return redirect(url_for('index'))
