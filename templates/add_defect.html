@@ -1,36 +1,120 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
+
 <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Add Defect</title>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+    <style>
+        body {
+            font-family: 'Roboto', sans-serif;
+            background-color: #f4f7f9;
+            margin: 0;
+            padding: 0;
+            color: #333;
+        }
+
+        .container {
+            width: 50%;
+            margin: 40px auto;
+            background-color: #ffffff;
+            padding: 30px;
+            border-radius: 8px;
+            box-shadow: 0px 0px 15px rgba(0, 0, 0, 0.1);
+        }
+
+        h1 {
+            text-align: center;
+            color: #4a90e2;
+            font-size: 2.5em;
+            margin-bottom: 30px;
+        }
+
+        form {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+        }
+
+        label {
+            font-size: 1.1em;
+            font-weight: 500;
+            color: #555;
+        }
+
+        select, input[type="text"], input[type="file"] {
+            padding: 10px;
+            font-size: 1em;
+            border-radius: 5px;
+            border: 1px solid #ddd;
+            box-shadow: inset 0px 1px 5px rgba(0, 0, 0, 0.1);
+            outline: none;
+            transition: border 0.3s ease;
+        }
+
+        select:focus, input[type="text"]:focus, input[type="file"]:focus {
+            border: 1px solid #4a90e2;
+        }
+
+        button[type="submit"] {
+            padding: 12px;
+            font-size: 1.2em;
+            background-color: #4a90e2;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+
+        button[type="submit"]:hover {
+            background-color: #357ABD;
+        }
+
+        .form-group {
+            margin-bottom: 15px;
+        }
+    </style>
 </head>
+
 <body>
-    <h1>Add Defect</h1>
-    <form action="{{ url_for('add_defect') }}" method="POST" enctype="multipart/form-data">
-        <label for="model">Model:</label>
-        <select id="model" name="model">
-            <option value="X6516">X6516</option>
-            <option value="X525B">X525B</option>
-            <option value="X6525">X6525</option>
-            <option value="X6528">X6528</option>
-            <option value="Villaon">Villaon</option>
-        </select>
-        <br>
-        <label for="defect_type">Defect Type:</label>
-        <select id="defect_type" name="defect_type">
-            <option value="SN">SN</option>
-            <option value="Appearance">Appearance</option>
-            <option value="Phone code">Phone code</option>
-            <option value="SN/IMEI">SN/IMEI</option>
-        </select>
-        <br>
-        <label for="imei">IMEI:</label>
-        <input type="text" id="imei" name="imei" required>
-        <br>
-        <label for="image">Image:</label>
-        <input type="file" id="image" name="image">
-        <br>
-        <button type="submit">Add Defect</button>
-    </form>
+
+    <div class="container">
+        <h1>Add Defect</h1>
+        <form action="{{ url_for('add_defect') }}" method="POST" enctype="multipart/form-data">
+            <div class="form-group">
+                <label for="model">Model:</label>
+                <select id="model" name="model">
+                    <option value="X6516">X6516</option>
+                    <option value="X525B">X525B</option>
+                    <option value="X6525">X6525</option>
+                    <option value="X6528">X6528</option>
+                    <option value="Villaon">Villaon</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <label for="defect_type">Defect Type:</label>
+                <select id="defect_type" name="defect_type">
+                    <option value="SN">SN</option>
+                    <option value="Appearance">Appearance</option>
+                    <option value="Phone code">Phone code</option>
+                    <option value="SN/IMEI">SN/IMEI</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <label for="imei">IMEI:</label>
+                <input type="text" id="imei" name="imei" required>
+            </div>
+            <div class="form-group">
+                <label for="image">Image:</label>
+                <input type="file" id="image" name="image">
+            </div>
+            <button type="submit">Add Defect</button>
+        </form>
+    </div>
+
 </body>
+
 </html>
